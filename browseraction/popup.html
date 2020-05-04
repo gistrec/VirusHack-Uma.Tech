@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Pass Media Assistent</title>
+    <meta name="description" content="Pass Media Assistent">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body class="wrapper">
+
+<header>Pass Media Assistent</header>
+<main>
+
+    <section class="config">
+        <div class="switch" id="switch">
+            <div class="switch-on">Вкл</div>
+            <div class="switch-off">Выкл</div>
+        </div>
+
+        <div class="setting" data-type="%" data-default="100" data-filter="brightness">
+            <div class="setting__title">
+                <span>Яркость</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="300">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="%" data-default="100" data-filter="contrast">
+            <div class="setting__title">
+                <span>Контраст</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="300">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="%" data-default="100" data-filter="saturate">
+            <div class="setting__title">
+                <span>Насыщенность</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="300">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="%" data-default="0" data-filter="grayscale">
+            <div class="setting__title">
+                <span>Оттенки серого</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="100">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="%" data-default="0" data-filter="invert">
+            <div class="setting__title">
+                <span>Инверсия</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="100">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="%" data-default="0" data-filter="sepia">
+            <div class="setting__title">
+                <span>Серпия</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="100">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="deg" data-default="0" data-filter="hue-rotate">
+            <div class="setting__title">
+                <span>Поворот цветов</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="360">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting" data-type="px" data-default="0" data-filter="blur">
+            <div class="setting__title">
+                <span>Размытие</span>
+                <span class="setting__reset"></span>
+            </div>
+            <input tabindex="-1" class="setting__inp" type="range" min="0" max="50">
+            <span class="setting__val"></span>
+        </div>
+
+        <div class="setting-svg">
+            <div class="setting__title">
+                <span>Фильтр SVG</span>
+            </div>
+            <div class="settings__configure">
+                <select tabindex="-1" id="svg-select-settings">
+                    <option value="off">Выключен</option>
+                </select>
+                <button type="button" tabindex="-1" id="svg-config-button">Настроить</button>
+            </div>
+        </div>
+
+        <button type="button" tabindex="-1" class="reset-all" id="reset">Сбросить все</button>
+
+        <div id="svg-config" class="svg-config">
+            <div class="svg-title">Настройка SVG</div>
+
+            <div id="svg-wrapper" class="svg-wrapper">
+                <div class="svg-menu svg-wrapper-blur">
+                    <span class="svg-subtitle">Фильтр:</span>
+                    <select tabindex="-1" id="svg-select-config">
+                    </select>
+                </div>
+                <div class="svg-menu svg-wrapper-blur">
+                    <button type="button" tabindex="-1" id="svg-del" class="svg-del">Удалить</button>
+                    <button type="button" tabindex="-1" id="svg-reset" class="svg-reset">Сбросить</button>
+                    <button type="button" tabindex="-1" id="svg-rename">Переименовать</button>
+                    <button type="button" tabindex="-1" id="svg-new">Создать новый</button>
+                </div>
+                <div class="svg-code svg-wrapper-blur">
+                    <code>&lt;filter&gt;</code>
+                    <textarea tabindex="-1" spellcheck="false" id="svg-filter-value"></textarea>
+                    <code>&lt;/filter&gt;</code>
+                </div>
+                <div class="svg-menu svg-wrapper-blur">
+                    <button type="button" tabindex="-1" class="svg-save" id="svg-save">Сохранить</button>
+                </div>
+
+                <div class="svg-create-block">
+                    <div class="svg-menu">
+                        <span class="svg-subtitle">Название:</span>
+                        <input tabindex="-1" type="text" id="svg-create-input"/>
+                    </div>
+                    <div class="svg-menu">
+                        <button type="button" tabindex="-1" id="svg-create-button"
+                                class="button-bigger svg-create-button">Создать</button>
+                        <button type="button" tabindex="-1" id="svg-rename-button"
+                                class="button-bigger svg-rename-button">Сохранить</button>
+                        <button type="button" tabindex="-1" id="svg-create-cancel"
+                                class="button-bigger">Отмена</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="svg-message" class="svg-message">
+                <span class="svg-message__saved">Значение фильтра сохранено!</span>
+                <span class="svg-message__deleted">Фильтр удален!</span>
+                <span class="svg-message__reset">Фильтр сброшен к значениям по умолчанию!</span>
+                <span class="svg-message__renamed">Название фильра изменено!</span>
+                <span class="svg-message__created">Новый фильтр создан!</span>
+            </div>
+            <button type="button" tabindex="-1" class="reset-all reset-back" id="go-back">Вернуться назад</button>
+        </div>
+
+    </section>
+
+    <footer>
+        <span id="version"></span>
+        <span>Pass Media Assistent</span>
+        <span>&copy;</span>
+        <a class="link site" title="gistrec" href="https://github.com/gistrec" target="_blank" tabindex="-1">gistrec</a>
+    </footer>
+
+</main>
+
+<script type="text/javascript" src="/vendor/jquery-3.1.1.min.js"></script>
+<script type="text/javascript" src="popup.js"></script>
+</body>
+</html>
