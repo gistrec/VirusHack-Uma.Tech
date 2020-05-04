@@ -1,0 +1,39 @@
+{
+    "manifest_version": 2,
+    "name": "Pass Media Assistent",
+    "version": "1.0.0",
+    "short_name": "Pass Media Assistent",
+    "description": "Расширение обеспечивает доступ к аудиовизуальному сервису группе людей с ограниченными возможностями",
+    "icons":{
+        "48": "icons/32x32.png",
+        "128":"icons/32x32.png"
+    },
+    "author":"gistrec",
+    "permissions":[
+        "storage",
+        "https://pass.media/"
+    ],
+    "browser_action":{
+        "default_title": "Pass Media Assistent",
+        "default_popup": "browseraction/popup.html"
+    },
+    "background":{
+        "scripts":[
+            "background.js"
+        ]
+    },
+    "content_scripts":[
+        {
+            "all_frames":true,
+            "matches":[
+                "https://pass.media/"
+            ],
+            "js":[
+                "contentscripts/content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources":[
+        "icons/*.png"
+    ]
+}
