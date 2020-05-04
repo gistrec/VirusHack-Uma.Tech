@@ -42,7 +42,7 @@
         var files = chrome.runtime.getManifest().content_scripts[0];
         var script = files.js[0];
 
-        chrome.tabs.query({url: ['https://pass.media/']}, function (tabs) {
+        chrome.tabs.query({url: ['<all_urls>']}, function (tabs) {
             tabs.forEach(function (tab) {
                 chrome.tabs.executeScript(tab.id, {file: script, allFrames: true});
             });

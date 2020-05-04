@@ -74,15 +74,30 @@
     $version.text('v' + appVersion);
 
     function log(msg) {
+        var time = new Date();
+        time = ("0" + time.getHours()).slice(-2)   + ":" + 
+               ("0" + time.getMinutes()).slice(-2) + ":" + 
+               ("0" + time.getSeconds()).slice(-2);
         chrome.tabs.executeScript({
-            code: `console.log("${msg}");`
+            code: `console.log("[${time}] ${msg}");`
         });
     }
 
-    $voice.click(function () {
-        log('Началась запись команды');
+    var isInit = false;
 
-        recognition.start();
+    $voice.click(function () {
+        // Если нажимаем первый раз
+        if (!isInit) {
+            log("Проигрывание звука 'Приветствие.m4a'")
+
+            var myAudio = new Audio(chrome.runtime.getURL("sounds/Приветствие.m4a"));
+            myAudio.play();
+            isInit = true;
+        }else {
+            log('Началась запись команды');
+
+            recognition.start();
+        }
     });
 
     $switch.click(function () {

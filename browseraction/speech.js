@@ -7,10 +7,22 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 1;
 
 function log(msg) {
+    var time = new Date();
+    time = ("0" + time.getHours()).slice(-2)   + ":" + 
+           ("0" + time.getMinutes()).slice(-2) + ":" + 
+           ("0" + time.getSeconds()).slice(-2);
     chrome.tabs.executeScript({
-        code: `console.log("${msg}");`
+        code: `console.log("[${time}] ${msg}");`
     });
 }
+
+// Набор состояний
+//    main        - на главной странице
+//    wait_phone  - ждем ввода телефон
+//    password    - на странице с паролем
+//    wait_passwd - ждем ввода пароля
+// TODO: Вынести в отдельный файл, когда будет время
+var state = "main" // На главной странице
 
 recognition.onresult = function(event) {
     // The SpeechRecognitionEvent results property returns a SpeechRecognitionResultList object
@@ -23,8 +35,30 @@ recognition.onresult = function(event) {
     // We then return the transcript property of the SpeechRecognitionAlternative object
     var transcript = event.results[0][0].transcript;
     var confidence = event.results[0][0].confidence;
-    log(confidence);
-    log(transcript);
+    log(`Пользователь сказал: '${transcript}', точность определения: ${confidence}`);
+
+    if (state == "wait_phone") {
+        const phone = transcript.replace(/ /g, '');
+
+        log(`Установили телефон '${phone}'`)
+
+        chrome.tabs.executeScript({
+            code: `document.getElementsByClassName("phone__number")[0].value="${phone}"`
+        });
+        state = "password";
+        return;
+    }
+    if (state == "wait_passwd") {
+        const password = transcript.replace(/ /g, '');
+
+        log(`Установили пароль '${password}'`)
+
+        chrome.tabs.executeScript({
+            code: `document.getElementsByName("password")[0].value="${password}"`
+        });
+        state = "done";
+        return;
+    }
 
     $.ajax({
         type: "GET",
@@ -39,6 +73,30 @@ recognition.onresult = function(event) {
         success: function(data) {
             // Название интента - команда
             var command = data.result.metadata.intentName;
+            log(`Намерение пользователя: '${command}'`)
+
+            if (command == "Ввод телефона" && state == "main") {
+                log("Проигрывание звука 'Скажите номер телефона.m4a'")
+
+                var myAudio = new Audio(chrome.runtime.getURL("sounds/Скажите номер телефона.m4a"));
+                myAudio.play();
+
+                state = "wait_phone";
+            }
+            if (command == "Ввод пароля" && state == "password") {
+                log("Проигрывание звука 'Скажите свой пароль.m4a'")
+
+                var myAudio = new Audio(chrome.runtime.getURL("sounds/Скажите свой пароль.m4a"));
+                myAudio.play();
+
+                state = "wait_passwd";                
+            }
+            if (command == undefined || command == "Неверная команда") {
+                log("Проигрывание звука 'Команда не найдена.m4a'")
+
+                var myAudio = new Audio(chrome.runtime.getURL("sounds/Команда не найдена.m4a"));
+                myAudio.play();    
+            }
         },
         error: function(xhr, status, error) {
             alert("Возникла ошибка при запросе на DialogFlow");
