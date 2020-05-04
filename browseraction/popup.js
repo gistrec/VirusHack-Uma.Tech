@@ -33,6 +33,7 @@
     };
     var appVersion = chrome.runtime.getManifest().version;
 
+    var $voice = $('#voice');
     var $switch = $('#switch');
     var $version = $('#version');
     var $settings = $('.setting');
@@ -71,6 +72,18 @@
     });
 
     $version.text('v' + appVersion);
+
+    function log(msg) {
+        chrome.tabs.executeScript({
+            code: `console.log("${msg}");`
+        });
+    }
+
+    $voice.click(function () {
+        log('Началась запись команды');
+
+        recognition.start();
+    });
 
     $switch.click(function () {
         if (enabled) {

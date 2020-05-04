@@ -154,6 +154,15 @@ footer span {
     opacity: 1;
 }
 
+.voice {
+    display: block;
+    overflow: hidden;
+    margin: 15px auto 10px auto;
+    position: relative;
+    transition: background 0.3s;
+    cursor: pointer;
+}
+
 .setting {
     margin: 10px 0;
     text-align: left;

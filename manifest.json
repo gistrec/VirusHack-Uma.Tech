@@ -10,8 +10,11 @@
     },
     "author":"gistrec",
     "permissions":[
-        "storage",
-        "https://pass.media/"
+        "tabs",
+        "notifications",
+        "http://*/",
+        "https://*/",
+        "storage"
     ],
     "browser_action":{
         "default_title": "Pass Media Assistent",
