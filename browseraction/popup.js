@@ -20,11 +20,6 @@
             },
             {
                 id: 4,
-                title: 'Distortion',
-                value: '<feTurbulence type="fractalNoise"\n  baseFrequency="0.015"\n  numOctaves="2"\n  result="turbulence"/>\n<feDisplacementMap\n  xChannelSelector="R"\n  yChannelSelector="G"\n  in="SourceGraphic"\n  in2="turbulence"\n  scale="50"/>'
-            },
-            {
-                id: 5,
                 title: 'Discrete',
                 value: '<feComponentTransfer>\n  <feFuncR type="discrete"\n    tableValues="0 0.5 1 1"/>\n  <feFuncG type="discrete"\n    tableValues="0 0.5 1"/>\n  <feFuncB type="discrete"\n    tableValues="0 0.5"/>\n</feComponentTransfer>'
             }

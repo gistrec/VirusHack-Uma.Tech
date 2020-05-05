@@ -1,6 +1,11 @@
 var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
 
 var recognition = new SpeechRecognition();
+var speechRecognitionList = new SpeechGrammarList();
+
+speechRecognitionList.addFromString('#JSGF V1.0;', 1);
+recognition.grammars = speechRecognitionList;
 recognition.continuous = false;
 recognition.lang = 'ru-RU';
 recognition.interimResults = false;
